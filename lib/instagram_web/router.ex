@@ -20,7 +20,7 @@ defmodule InstagramWeb.Router do
   scope "/", InstagramWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    get "/", PublicController, :homepage
   end
 
   # Other scopes may use custom stacks.

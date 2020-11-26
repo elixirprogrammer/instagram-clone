@@ -1,0 +1,11 @@
+ <!-- Page Content -->
+<h1 class="mt-5">Welcome to Instagram</h1>
+<p class="lead">Please register or sign in to continue.</p>
+
+<%= link to: Routes.user_registration_path(@conn, :new), class: "btn btn-success" do %>
+    Register
+<% end %>
+
+<%= link to: Routes.user_session_path(@conn, :new), class: "btn btn-secondary" do %>
+    Log In
+<% end %>
