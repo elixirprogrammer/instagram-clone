@@ -21,6 +21,7 @@ defmodule InstagramWeb.Router do
     pipe_through :browser
 
     get "/", PublicController, :homepage
+    resources "/posts", PostController, only: [:index, :new, :create, :show]
   end
 
   # Other scopes may use custom stacks.

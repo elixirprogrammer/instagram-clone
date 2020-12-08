@@ -1,6 +1,7 @@
 defmodule Instagram.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Instagram.Feed.Post
 
   @derive {Inspect, except: [:password]}
   schema "users" do
@@ -8,6 +9,12 @@ defmodule Instagram.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+    field :username, :string
+    field :full_name, :string
+    field :image_url, :string
+    field :bio, :string
+    field :website, :string
+    has_many :posts, Post
 
     timestamps()
   end
@@ -31,7 +38,10 @@ defmodule Instagram.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password])
+    |> cast(attrs, [:email, :password, :username, :full_name, :image_url, :bio, :website])
+    |> validate_required([:username, :first_name, :last_name])
+    |> validate_length(:username, min: 5, max: 30)
+    |> validate_length(:full_name, min: 4, max: 30)
     |> validate_email()
     |> validate_password(opts)
   end

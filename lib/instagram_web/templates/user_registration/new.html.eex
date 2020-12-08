@@ -11,6 +11,18 @@
   <%= email_input f, :email, required: true %>
   <%= error_tag f, :email %>
 
+  <%= label f, :username %>
+  <%= text_input f, :username, required: true %>
+  <%= error_tag f, :username %>
+
+  <%= label f, :first_name %>
+  <%= text_input f, :first_name, required: true %>
+  <%= error_tag f, :first_name %>
+
+  <%= label f, :last_name %>
+  <%= text_input f, :last_name, required: true %>
+  <%= error_tag f, :last_name %>
+
   <%= label f, :password %>
   <%= password_input f, :password, required: true %>
   <%= error_tag f, :password %>

@@ -1,4 +1,10 @@
 /* This file is for your main application css. */
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
 @import "../vendor/css/bootstrap.min.scss";
 @import "../node_modules/nprogress/nprogress.css";
 @import "custom";
