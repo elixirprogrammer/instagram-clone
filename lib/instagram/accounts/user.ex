@@ -39,7 +39,7 @@ defmodule Instagram.Accounts.User do
   def registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:email, :password, :username, :full_name, :image_url, :bio, :website])
-    |> validate_required([:username, :first_name, :last_name])
+    |> validate_required([:username, :full_name])
     |> validate_length(:username, min: 5, max: 30)
     |> validate_length(:full_name, min: 4, max: 30)
     |> validate_email()
