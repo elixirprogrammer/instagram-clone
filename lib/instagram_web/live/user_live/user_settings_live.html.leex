@@ -1,10 +1,23 @@
 <h2><%= @page_title %></h2>
 <h4><%= @user_change %></h4>
+<%= img_tag(@user.image_url) %>
 
 <%= f = form_for @changeset, "#",
   id: "user-form",
   phx_change: "validate",
   phx_submit: "save" %>
+
+  <%= for {_ref, err} <- @uploads.image_url.errors do %>
+      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+  <% end %>
+
+  <div class="post" phx-drop-target="<%= @uploads.image_url.ref %>">
+      <%= live_file_input @uploads.image_url, class: "post" %>
+  </div>
+
+  <%= for entry <- @uploads.image_url.entries do %>
+    <h5><%= entry.client_name %></h5>
+  <% end %>
 
   <%= label f, :full_name %>
   <%= text_input f, :full_name, autocomplete: "off" %>

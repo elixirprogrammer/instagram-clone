@@ -3,6 +3,10 @@ defmodule InstagramWeb.UserSettingsLive do
 
   alias Instagram.Accounts
   alias Instagram.Accounts.User
+  alias Instagram.Uploaders.Avatar
+
+  @extension_whitelist ~w(.jpg .jpeg .png)
+
 
   @impl true
   def mount(_params, %{"user_token" => user}, socket) do
@@ -11,9 +15,14 @@ defmodule InstagramWeb.UserSettingsLive do
 
     {:ok,
       socket
-      |>assign(:user, user)
-      |>assign(:user_change, user_change)
-      |>assign(:temporary_assigns, [user_change: []])}
+      |> assign(:user, user)
+      |> assign(:user_change, user_change)
+      |> assign(:temporary_assigns, [user_change: []])
+      |> assign(:uploaded_files, [])
+      |> allow_upload(:image_url,
+      accept: @extension_whitelist,
+      max_entries: 1,
+      max_file_size: 9_000_000)}
   end
 
   @impl true
@@ -46,8 +55,10 @@ defmodule InstagramWeb.UserSettingsLive do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
+    user_params = Avatar.put_image_url(socket, :image_url, user_params)
     case Accounts.update_user(socket.assigns.user, user_params) do
       {:ok, _user} ->
+        Avatar.update(socket, socket.assigns.user.image_url)
         {:noreply,
           socket
           |> put_flash(:info, "User updated successfully")

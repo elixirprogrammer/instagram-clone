@@ -11,7 +11,7 @@ defmodule Instagram.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :username, :string
     field :full_name, :string
-    field :image_url, :string
+    field :image_url, :string, default: "https://via.placeholder.com/150"
     field :bio, :string
     field :website, :string
     has_many :posts, Post
@@ -46,7 +46,7 @@ defmodule Instagram.Accounts.User do
     |> validate_password(opts)
   end
 
-  def update_changeset(user, attrs, opts \\ []) do
+  def update_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :password, :username, :full_name, :image_url, :bio, :website])
     |> validate_required([:username, :full_name])
