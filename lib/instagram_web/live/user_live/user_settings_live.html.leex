@@ -1,0 +1,32 @@
+<h2><%= @page_title %></h2>
+<h4><%= @user_change %></h4>
+
+<%= f = form_for @changeset, "#",
+  id: "user-form",
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= label f, :full_name %>
+  <%= text_input f, :full_name, autocomplete: "off" %>
+  <%= error_tag f, :full_name %>
+
+  <%= label f, :username %>
+  <%= text_input f, :username, phx_keyup: "update_username", autocomplete: "off" %>
+  <%= error_tag f, :username %>
+
+  <%= label f, :website %>
+  <%= text_input f, :website, autocomplete: "off" %>
+  <%= error_tag f, :website %>
+
+  <%= label f, :bio %>
+  <%= textarea f, :bio, autocomplete: "off" %>
+  <%= error_tag f, :bio %>
+
+  <%= label f, :email %>
+  <%= email_input f, :email, autocomplete: "off" %>
+  <%= error_tag f, :email %>
+
+  <%= submit "Submit", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+
+
+</form>

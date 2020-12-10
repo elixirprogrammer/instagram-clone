@@ -145,6 +145,12 @@ defmodule Instagram.Accounts do
     end
   end
 
+  def update_user(%User{} = user, attrs) do
+    user
+    |> User.update_changeset(attrs)
+    |> Repo.update()
+  end
+
   defp user_email_multi(user, email, context) do
     changeset = user |> User.email_changeset(%{email: email}) |> User.confirm_changeset()
 
