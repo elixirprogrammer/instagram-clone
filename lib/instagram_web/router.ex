@@ -22,6 +22,7 @@ defmodule InstagramWeb.Router do
 
     get "/", PublicController, :homepage
     resources "/posts", PostController, only: [:index, :new, :create, :show]
+    live "/profile/:username", UserProfileLive, :profile
   end
 
   # Other scopes may use custom stacks.

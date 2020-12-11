@@ -10,6 +10,7 @@ defmodule InstagramWeb.UserSettingsLive do
 
   @impl true
   def mount(_params, %{"user_token" => user}, socket) do
+    IO.inspect user
     user = Accounts.get_user_by_session_token(user)
     user_change = user.username
 

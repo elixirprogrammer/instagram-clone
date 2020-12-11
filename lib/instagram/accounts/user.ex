@@ -41,6 +41,8 @@ defmodule Instagram.Accounts.User do
     |> cast(attrs, [:email, :password, :username, :full_name, :image_url, :bio, :website])
     |> validate_required([:username, :full_name])
     |> validate_length(:username, min: 5, max: 30)
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_.-]*$/, message: "Please use letters and numbers without space(only characters allowed _ . -)")
+    |> unique_constraint(:username)
     |> validate_length(:full_name, min: 4, max: 30)
     |> validate_email()
     |> validate_password(opts)
@@ -51,6 +53,8 @@ defmodule Instagram.Accounts.User do
     |> cast(attrs, [:email, :password, :username, :full_name, :image_url, :bio, :website])
     |> validate_required([:username, :full_name])
     |> validate_length(:username, min: 5, max: 30)
+    |> validate_format(:username, ~r/^[a-zA-Z0-9_.-]*$/, message: "Please use letters and numbers without space(only characters allowed _ . -)")
+    |> unique_constraint(:username)
     |> validate_length(:full_name, min: 4, max: 30)
     |> validate_email()
   end
