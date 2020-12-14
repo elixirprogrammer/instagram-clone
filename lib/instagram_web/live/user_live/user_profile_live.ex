@@ -1,16 +1,15 @@
 defmodule InstagramWeb.UserProfileLive do
   use InstagramWeb, :live_view
 
+  alias Instagram.Accounts
+
   def mount(%{"username" => username}, _session, socket) do
-    case check_username_param(username) do
+    case Accounts.profile(username) do
       nil ->
         {:ok, socket |> push_redirect(to: "/")}
-      username ->
-        {:ok, socket}
+      user ->
+        {:ok, assign(socket, :user, user)}
     end
   end
 
-  defp check_username_param(username) do
-    Regex.run(~r/^[a-zA-Z0-9_.-]*$/, username)
-  end
 end

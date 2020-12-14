@@ -236,6 +236,10 @@ defmodule Instagram.Accounts do
     Repo.one(query)
   end
 
+  def profile(param) do
+    Repo.get_by(User, username: param) |> Repo.preload([:posts])
+  end
+
   @doc """
   Deletes the signed token with the given context.
   """
