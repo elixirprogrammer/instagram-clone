@@ -21,7 +21,6 @@ defmodule InstagramWeb.Router do
     pipe_through :browser
 
     get "/", PublicController, :homepage
-    resources "/posts", PostController, only: [:index, :new, :create, :show]
     live "/profile/:username", UserProfileLive, :profile
   end
 
@@ -68,6 +67,7 @@ defmodule InstagramWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     live "/u/settings", UserSettingsLive, :edit
+    live "/posts/new", PostLive.New, :new
   end
 
   scope "/", InstagramWeb do

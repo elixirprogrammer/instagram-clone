@@ -2,7 +2,7 @@ defmodule Instagram.Feed do
   @moduledoc """
   The Feed context.
   """
-
+  import Ecto
   import Ecto.Query, warn: false
   alias Instagram.Repo
 
@@ -49,8 +49,8 @@ defmodule Instagram.Feed do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_post(attrs \\ %{}) do
-    %Post{}
+  def create_post(%Post{} = post, attrs \\ %{}, user) do
+    post = Ecto.build_assoc(user, :posts, post)
     |> Post.changeset(attrs)
     |> Repo.insert()
   end

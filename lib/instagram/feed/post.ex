@@ -3,7 +3,7 @@ defmodule Instagram.Feed.Post do
   import Ecto.Changeset
 
   schema "posts" do
-    field :image_url, :string
+    field :image_url, {:array, :string}, default: []
     field :description, :string
     belongs_to :user, Instagram.Accounts.User
 

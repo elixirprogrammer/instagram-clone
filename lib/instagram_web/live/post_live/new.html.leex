@@ -1,0 +1,39 @@
+<h2><%= @page_title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "post-form",
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= for {_ref, err} <- @uploads.image_url.errors do %>
+      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+  <% end %>
+
+  <div class="post" phx-drop-target="<%= @uploads.image_url.ref %>">
+      <%= live_file_input @uploads.image_url, class: "post" %>
+  </div>
+
+  <%= for entry <- @uploads.image_url.entries do %>
+    <div class="row">
+      <div class="column">
+        <%= live_img_preview entry, height: 80, width: 80 %>
+      </div>
+      <h5><%= entry.client_name %></h5>
+      <div class="column">
+        <progress max="100" value="<%= entry.progress %>" />
+      </div>
+      <span><%= entry.progress %>%</span>
+      <div class="column">
+        <a href="#" class="button" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>">cancel</a>
+      </div>
+    </div>
+  <% end %>
+
+  <%= label f, :description %>
+  <%= textarea f, :description, autocomplete: "off" %>
+  <%= error_tag f, :description %>
+
+  <%= submit "Submit", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+
+
+</form>
