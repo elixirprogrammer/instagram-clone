@@ -18,7 +18,6 @@ defmodule InstagramWeb.PostLive.New do
       |> assign(current_user: user)
       |> assign(page_title: "New Post")
       |> assign(changeset: changeset)
-      |> assign(:uploaded_files, [])
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
       max_entries: 10,

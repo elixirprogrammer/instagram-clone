@@ -18,10 +18,8 @@ defmodule InstagramWeb.UserSettingsLive do
       |> assign(:user, user)
       |> assign(:user_change, user_change)
       |> assign(:temporary_assigns, [user_change: []])
-      |> assign(:uploaded_files, [])
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
-      max_entries: 1,
       max_file_size: 9_000_000)}
   end
 

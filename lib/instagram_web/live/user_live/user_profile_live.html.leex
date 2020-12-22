@@ -1,7 +1,15 @@
-<%= img_tag @user.image_url %>
-<%= @user.username %>
-<%= @user.full_name %>
-<%= @user.website %>
+<div class="w-40 h-40 shadow-2xl rounded-full">
+  <%= img_tag @user.image_url,
+      width: 250, height: 250,
+      class: "rounded-full w-full h-full" %>
+</div>
 <h1 class="text-red-500 font-bold text-center">
   <%= length(@user.posts) %>
 </h1>
+<%= @user.username %>
+<%= @user.full_name %>
+<%= @user.website %>
+
+<%= for post <- @user.posts do %>
+  <%= img_tag List.first post.image_url %>
+<% end %>
