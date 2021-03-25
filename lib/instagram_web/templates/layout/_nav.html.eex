@@ -33,7 +33,7 @@
           @click="open = true"
           class="w-7 h-7 ml-6 shadow-md rounded-full overflow-hidden cursor-pointer"
         >
-          <%= img_tag @user.image_url,
+          <%= img_tag @current_user.image_url,
           class: "w-full h-full object-cover object-center" %>
         </li>
         <ul class="absolute top-14 w-56 bg-white shadow-md text-sm -right-8"

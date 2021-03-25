@@ -5,6 +5,7 @@ defmodule InstagramWeb.UserProfileLive do
   alias Instagram.Feed.Post
 
   def mount(%{"username" => username}, session, socket) do
+    socket = assign_defaults(session, socket)
     case Accounts.profile(username) do
       nil ->
         {:ok, socket |> push_redirect(to: "/")}
