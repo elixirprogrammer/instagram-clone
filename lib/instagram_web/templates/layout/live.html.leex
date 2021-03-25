@@ -2,7 +2,7 @@
   <header class="flex items-center container mx-auto max-w-full md:w-11/12 2xl:w-6/12">
     <h1 class="w-2/5 text-2xl font-bold italic">#Instathot</h1>
     <div class="w-1/5"><input type="search" placeholder="Search" class="border-2 px-0.5 rounded"></div>
-    <nav class="w-2/5">
+    <nav class="w-2/5 relative">
       <ul x-data="{open: false}" class="flex justify-end">
         <li class="w-7 h-7 text-gray-600">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,12 +31,12 @@
         </li>
         <li
           @click="open = true"
-          class="w-7 h-7 ml-6 shadow-md rounded-full overflow-hidden cursor-pointer relative"
+          class="w-7 h-7 ml-6 shadow-md rounded-full overflow-hidden cursor-pointer"
         >
           <%= img_tag @user.image_url,
           class: "w-full h-full object-cover object-center" %>
         </li>
-        <ul class="absolute top-14 w-56 bg-white shadow-md text-sm"
+        <ul class="absolute top-14 w-56 bg-white shadow-md text-sm -right-8"
             x-show="open"
             @click.away="open = false"
             x-transition:enter="transition ease-out duration-200"
