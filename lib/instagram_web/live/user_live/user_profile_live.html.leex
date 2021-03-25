@@ -1,15 +1,83 @@
-<div class="w-40 h-40 shadow-2xl rounded-full">
-  <%= img_tag @user.image_url,
-      width: 250, height: 250,
-      class: "rounded-full w-full h-full" %>
-</div>
-<h1 class="text-red-500 font-bold text-center">
-  <%= length(@user.posts) %>
-</h1>
-<%= @user.username %>
-<%= @user.full_name %>
-<%= @user.website %>
+<!-- <%= live_component @socket, InstagramWeb.UserFollowComponentLive, id: @user.id, name: "Follow", btn: "btn-primary" %>> -->
+<header class="md:flex md:justify-center">
+  <div class="flex p-4">
+    <div class="w-1/5">
+      <div class="w-20 h20 md:w-40 md:h-40 shadow-2xl rounded-full overflow-hidden">
+        <a href=""><%= img_tag @user.image_url,
+          class: "w-full h-full object-cover object-center" %></a>
+      </div>
+    </div>
+    <div class="w-4/5 md:pl-24 md:ml-12 ml-6"><ul>
+      <li class="md:flex px-2 pt-1 md:px-3 md:pt-3">
+        <h1 class="truncate md:overflow-clip text-2xl md:text-2xl text-gray-500 mb-3"><%= @user.username %></h1>
+        <span class="md:ml-11"><button class="w-full md:w-24 block py-1 px-5 border-none shadow rounded text-gray-50 hover:bg-blue-600 bg-blue-500">Follow</button></span>
+      </li>
+      <li>
+        <ul class="hidden md:flex p-3">
+            <li><b><%= length(@user.posts) %></b> Posts</li>
+            <li class="ml-11"><b>6</b> Followers</li>
+            <li class="ml-11"><b>20</b> Following</li>
+          </ul>
+      </li>
+      <li class="hidden md:block p-3">
+        <h2 class="text-md text-gray-600 font-bold"><%= @user.full_name %></h2>
+        <p class="max-w-full break-words"><%= @user.bio %></p>
+        <%= link @user.website, to: "https://www.#{@user.website}", target: "_blank", class: "text-blue-700" %>
+      </li>
+    </ul></div>
+  </div>
+</header>
 
-<%= for post <- @user.posts do %>
-  <%= img_tag List.first post.image_url %>
-<% end %>
+<!-- Details section -->
+<div class="my-3 md:hidden">
+    <h2 class="pl-3 text-xs text-gray-800 font-bold"><%= @user.full_name %></h2>
+    <p class="py-1 pl-3 max-w-full break-words"><%= @user.bio %></p>
+    <%= link @user.website, to: "https://www.#{@user.website}", target: "_blank", class: "text-sm pl-3 text-blue-700" %>
+</div>
+<!-- Count section -->
+<section class="md:hidden mt-5 border-t-2 border-b-2 border-gray-200 px-2 py-2 max-w-full">
+ <ul class="flex" >
+    <li class="flex-auto" >
+        <div class="flex flex-col text-center">
+            <div class="font-bold text-sm"><%= length(@user.posts) %></div>
+            <div class="text-xs text-gray-400">Posts</div>
+        </div>
+    </li>
+    <li class="flex-auto">
+        <div class="flex flex-col text-center">
+            <div class="font-bold text-sm">6</div>
+            <div class="text-xs text-gray-400">followers</div>
+        </div>
+    </li>
+    <li class="flex-auto">
+        <div class="flex flex-col text-center">
+            <div class="font-bold text-sm">20</div>
+            <div class="text-xs text-gray-400">following</div>
+        </div>
+    </li>
+ </ul>
+</section>
+
+<div class="md:border-t-2 md:mt-5">
+  <ul class="flex md:justify-center text-center">
+    <li class="md:flex-none text-blue-500 flex-auto pt-4 px-1 text-sm md:text-gray-600 md:border-t-2 md:border-black -mt-0.5">
+       POSTS
+    </li>
+    <li class="md:flex-none flex-auto pt-4 px-1 text-sm text-gray-400 md:ml-20">
+      IGTV
+    </li>
+    <li class="md:flex-none flex-auto pt-4 px-1 text-sm text-gray-400 md:ml-20">
+      SAVED
+    </li>
+    <li class="md:flex-none flex-auto pt-4 px-1 text-sm text-gray-400 md:ml-20">
+      TAGGED
+    </li>
+  </ul>
+</div>
+
+<!-- Gallery Grid -->
+<div class="mt-9 grid gap-1 sm:gap-1 md:gap-8 grid-cols-3">
+  <%= for post <- @user.posts do %>
+    <%= img_tag List.first(post.image_url), class: "md:h-66 lg:h-80 w-full object-cover shadow-xl" %>
+  <% end %>
+</div>
