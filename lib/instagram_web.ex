@@ -48,6 +48,7 @@ defmodule InstagramWeb do
         layout: {InstagramWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
+      import InstagramWeb.LiveHelpers
     end
   end
 
