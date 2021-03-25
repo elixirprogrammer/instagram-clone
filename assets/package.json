@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "alpinejs": "^2.8.2",
     "file-loader": "^6.0.0",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
