@@ -1,5 +1,5 @@
 defmodule InstagramWeb.LiveHelpers do
-  import Phoenix.LiveView.Helpers
+  import Phoenix.LiveView
   alias Instagramm.Accounts
   alias Instagram.Accounts.User
   alias InstagramWeb.Router.Helpers, as: Routes
