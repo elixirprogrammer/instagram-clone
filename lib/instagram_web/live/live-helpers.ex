@@ -9,16 +9,6 @@ defmodule InstagramWeb.LiveHelpers do
       assign_new(socket, :current_user, fn ->
         find_current_user(session)
       end)
-
-    case socket.assigns.current_user do
-      %User{} ->
-        socket
-
-      _other ->
-        socket
-        |> put_flash(:error, "You must log in to access this page.")
-        |> redirect(to: Routes.user_session_path(socket, :new))
-    end
   end
 
   defp find_current_user(session) do
