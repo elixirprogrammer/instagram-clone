@@ -21,7 +21,8 @@ defmodule InstagramWeb.Router do
     pipe_through :browser
 
     get "/", PublicController, :homepage
-    live "/:username", UserProfileLive, :profile
+    live "/:username", UserProfileLive
+    live "/p/:id", UserPostLive
   end
 
   # Other scopes may use custom stacks.
