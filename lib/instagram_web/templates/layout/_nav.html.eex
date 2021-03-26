@@ -1,19 +1,19 @@
 <div class="h-14 border-b-2 flex fixed w-full bg-white">
   <header class="flex items-center container mx-auto max-w-full md:w-11/12 2xl:w-6/12">
-    <h1 class="w-2/5 text-2xl font-bold italic">#Instathot</h1>
+    <a href="/" class="w-2/5"><h1 class="text-2xl font-bold italic">#Instathot</h1></a>
     <div class="w-1/5"><input type="search" placeholder="Search" class="border-2 px-0.5 rounded"></div>
     <nav class="w-2/5 relative">
       <ul x-data="{open: false}" class="flex justify-end">
         <%= if @current_user do %>
           <li class="w-7 h-7 text-gray-600">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
+            </svg></a>
           </li>
           <li class="w-7 h-7 ml-6 text-gray-600">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="/posts/new"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+            </svg></a>
           </li>
           <li class="w-7 h-7 ml-6 text-gray-600">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,9 +47,9 @@
               x-transition:leave-start="opacity-100 transform scale-100"
               x-transition:leave-end="opacity-0 transform scale-90"
             >
-              <li class="py-2 px-4 hover:bg-gray-50">Profile</li>
+              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Profile", to: "/profile/#{@current_user.username}" %></li>
               <li class="py-2 px-4 hover:bg-gray-50">Saved</li>
-              <li class="py-2 px-4 hover:bg-gray-50">Settings</li>
+              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Settings", to: "/u/settings" %></li>
               <li class="border-t-2 py-2 px-4 hover:bg-gray-50"><%= link "Log Out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
             </ul>
         <% else %>
