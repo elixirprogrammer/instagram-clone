@@ -47,7 +47,7 @@
               x-transition:leave-start="opacity-100 transform scale-100"
               x-transition:leave-end="opacity-0 transform scale-90"
             >
-              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Profile", to: "/profile/#{@current_user.username}" %></li>
+              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Profile", to: "/#{@current_user.username}" %></li>
               <li class="py-2 px-4 hover:bg-gray-50">Saved</li>
               <li class="py-2 px-4 hover:bg-gray-50"><%= link "Settings", to: "/u/settings" %></li>
               <li class="border-t-2 py-2 px-4 hover:bg-gray-50"><%= link "Log Out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
