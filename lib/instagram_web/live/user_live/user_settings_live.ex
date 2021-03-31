@@ -9,14 +9,15 @@ defmodule InstagramWeb.UserSettingsLive do
 
 
   @impl true
-  def mount(_params, %{"user_token" => user}, socket) do
-    user = Accounts.get_user_by_session_token(user)
-    user_change = user.username
+  def mount(_params, session, socket) do
+    socket = assign_defaults(session, socket)
+    user_change = socket.assigns.current_user.username
 
     {:ok,
       socket
-      |> assign(:user, user)
       |> assign(:user_change, user_change)
+      |> assign(:show_avatar, "block")
+      |> assign(:show_preview_avatar, "hidden")
       |> assign(:temporary_assigns, [user_change: []])
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
@@ -29,7 +30,7 @@ defmodule InstagramWeb.UserSettingsLive do
   end
 
   defp apply_action(socket, :edit, _params) do
-    changeset = User.update_changeset(socket.assigns.user, %{})
+    changeset = User.update_changeset(socket.assigns.current_user, %{})
 
     socket
     |> assign(:page_title, "Edit Profile")
@@ -39,11 +40,11 @@ defmodule InstagramWeb.UserSettingsLive do
   @impl true
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset =
-      socket.assigns.user
+      socket.assigns.current_user
       |> User.update_changeset(user_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :changeset, changeset)}
+    {:noreply, assign(socket, changeset: changeset, show_avatar: "hidden", show_preview_avatar: "block")}
   end
 
   @impl true
@@ -54,9 +55,9 @@ defmodule InstagramWeb.UserSettingsLive do
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
     user_params = Avatar.put_image_url(socket, :image_url, user_params)
-    case Accounts.update_user(socket.assigns.user, user_params) do
+    case Accounts.update_user(socket.assigns.current_user, user_params) do
       {:ok, _user} ->
-        Avatar.update(socket, socket.assigns.user.image_url)
+        Avatar.update(socket, socket.assigns.current_user.image_url)
         {:noreply,
           socket
           |> put_flash(:info, "User updated successfully")
@@ -66,4 +67,5 @@ defmodule InstagramWeb.UserSettingsLive do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
+
 end

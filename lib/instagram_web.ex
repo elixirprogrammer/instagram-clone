@@ -91,6 +91,11 @@ defmodule InstagramWeb do
       import InstagramWeb.ErrorHelpers
       import InstagramWeb.Gettext
       alias InstagramWeb.Router.Helpers, as: Routes
+
+      def format_username(name) do
+        name |> String.downcase |> String.split |> Enum.join
+      end
+
     end
   end
 

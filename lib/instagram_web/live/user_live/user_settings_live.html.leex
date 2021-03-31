@@ -1,45 +1,92 @@
-<h2><%= @page_title %></h2>
-<h4><%= @user_change %></h4>
-<%= img_tag(@user.image_url) %>
-
-<%= f = form_for @changeset, "#",
-  id: "user-form",
-  phx_change: "validate",
-  phx_submit: "save" %>
-
-  <%= for {_ref, err} <- @uploads.image_url.errors do %>
-      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
-  <% end %>
-
-  <div class="post" phx-drop-target="<%= @uploads.image_url.ref %>">
-      <%= live_file_input @uploads.image_url, class: "post" %>
+<section class="border-2 flex">
+<!-- SIDEBAR -->
+  <div class="w-1/4 border-r-2 hidden md:block">
+    <ul>
+      <a href="" class="">
+        <li class="p-4 border-l-2 border-black -ml-0.5 text-gray-900 font-semibold">Edit Profile</li>
+      </a>
+      <a href="" class="">
+        <li class="p-4 hover:border-l-2 -ml-0.5 hover:border-gray-300 hover:bg-gray-50">Change Password</li>
+      </a>
+    </ul>
   </div>
+<!-- END SIDEBAR -->
 
-  <%= for entry <- @uploads.image_url.entries do %>
-    <h5><%= entry.client_name %></h5>
-  <% end %>
+  <%= f = form_for @changeset, "#",
+    phx_change: "validate",
+    phx_submit: "save",
+    class: "space-y-8 md:space-y-8 w-full pb-5" %>
 
-  <%= label f, :full_name %>
-  <%= text_input f, :full_name, autocomplete: "off" %>
-  <%= error_tag f, :full_name %>
+    <%= for {_ref, err} <- @uploads.image_url.errors do %>
+      <p class="text-red-500"><%= Phoenix.Naming.humanize(err) %></p>
+    <% end %>
 
-  <%= label f, :username %>
-  <%= text_input f, :username, phx_keyup: "update_username", autocomplete: "off" %>
-  <%= error_tag f, :username %>
+    <!-- Profile Photo -->
+    <div class="flex md:flex items-center">
+      <div class="w-1/5 md:w-1/3 md:pl-0 pl-4">
+        <%= img_tag @current_user.image_url, class: "md:ml-auto w-10 h-10 rounded-full object-cover object-center #{@show_avatar}" %>
+        <%= for entry <- @uploads.image_url.entries do %>
+          <%= live_img_preview entry, class: "md:ml-auto w-10 h-10 rounded-full object-cover object-center #{@show_preview_avatar}" %>
+        <% end %>
+      </div>
+      <div class="w-full md:pl-8 md:ml-0 ml-4">
+        <h1 class="leading-none md:leading-none font-semibold text-lg truncate text-gray-500"><%= @user_change %></h1>
+        <div class="relative">
+          <%= live_file_input @uploads.image_url, class: "cursor-pointer relative block opacity-0 z-50 -left-24" %>
+          <div class="text-center absolute top-0 left-0 m-auto">
+            <span class="font-semibold text-xs md:text-sm text-light-blue-500">
+              Change Profile Photo
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END PROFILE PHOTO -->
+      <div class="md:flex items-center">
+        <%= label f, :full_name, class: "px-4 md:px-0 md:w-1/3 md:text-right font-semibold" %>
+        <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= text_input f, :full_name, class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= error_tag f, :full_name %>
+        </div>
+      </div>
 
-  <%= label f, :website %>
-  <%= text_input f, :website, autocomplete: "off" %>
-  <%= error_tag f, :website %>
+      <div class="md:flex items-center">
+        <%= label f, :username, class: "px-4 md:px-0 md:w-1/3 font-semibold md:text-right" %>
+        <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= text_input f, :username, phx_keyup: "update_username", class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= error_tag f, :username %>
+        </div>
+      </div>
 
-  <%= label f, :bio %>
-  <%= textarea f, :bio, autocomplete: "off" %>
-  <%= error_tag f, :bio %>
+      <div class="md:flex items-center">
+        <%= label f, :website, class: "px-4 md:px-0 md:w-1/3 md:text-right font-semibold" %>
+        <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= text_input f, :website, class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= error_tag f, :website %>
+        </div>
+      </div>
 
-  <%= label f, :email %>
-  <%= email_input f, :email, autocomplete: "off" %>
-  <%= error_tag f, :email %>
+      <div class="md:flex items-center">
+        <%= label f, :bio, class: "px-4 md:px-0 md:w-1/3 md:text-right font-semibold" %>
+        <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= textarea f, :bio, class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= error_tag f, :bio %>
+        </div>
+      </div>
 
-  <%= submit "Submit", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+      <div class="md:flex items-center">
+        <%= label f, :email, class: "px-4 md:px-0 md:w-1/3 md:text-right font-semibold" %>
+        <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= email_input f, :email, class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= error_tag f, :email %>
+        </div>
+      </div>
 
-
-</form>
+      <div class="md:flex items-center">
+        <label class="hidden md:block w-1/3 font-semibold md:text-right"></label>
+        <div class="md:w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
+          <%= submit "Submit", phx_disable_with: "Saving...", class: "w-16 py-1 px-1 border-none shadow rounded font-semibold text-sm text-gray-50 hover:bg-light-blue-600 bg-light-blue-500 cursor-pointer" %>
+        </div>
+      </div>
+  </form>
+</section>
