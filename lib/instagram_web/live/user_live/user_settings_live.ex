@@ -44,7 +44,11 @@ defmodule InstagramWeb.UserSettingsLive do
       |> User.update_changeset(user_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, changeset: changeset, show_avatar: "hidden", show_preview_avatar: "block")}
+    {:noreply,
+      socket
+      |> assign(changeset: changeset)
+      |> assign(show_avatar: "hidden")
+      |> assign(show_preview_avatar: "block")}
   end
 
   @impl true
@@ -60,6 +64,8 @@ defmodule InstagramWeb.UserSettingsLive do
         Avatar.update(socket, socket.assigns.current_user.image_url)
         {:noreply,
           socket
+          |> assign(show_avatar: "block")
+          |> assign(show_preview_avatar: "hidden")
           |> put_flash(:info, "User updated successfully")
           |> push_redirect(to: "/u/settings")}
 
