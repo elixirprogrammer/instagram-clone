@@ -11,7 +11,7 @@ defmodule Instagram.Accounts.User do
     field :confirmed_at, :naive_datetime
     field :username, :string
     field :full_name, :string
-    field :image_url, :string, default: "https://via.placeholder.com/150"
+    field :image_url, :string, default: "/images/default-avatar.png"
     field :bio, :string
     field :website, :string
     has_many :posts, Post
