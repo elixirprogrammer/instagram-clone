@@ -51,6 +51,7 @@ defmodule Instagram.MixProject do
       {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false},
       {:timex, "~> 3.6"},
       {:faker, "~> 0.16.0"},
+      {:mogrify, "~> 0.8.0"}
     ]
   end
 

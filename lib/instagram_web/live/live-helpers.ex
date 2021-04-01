@@ -2,7 +2,6 @@ defmodule InstagramWeb.LiveHelpers do
   import Phoenix.LiveView
   alias Instagram.Accounts
   alias Instagram.Accounts.User
-  alias InstagramWeb.Router.Helpers, as: Routes
 
   def assign_defaults(session, socket) do
     socket =

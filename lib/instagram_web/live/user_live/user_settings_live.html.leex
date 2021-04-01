@@ -24,7 +24,7 @@
     <!-- Profile Photo -->
     <div class="flex md:flex items-center">
       <div class="w-1/5 md:w-1/3 md:pl-0 pl-4">
-        <%= img_tag @current_user.image_url, class: "md:ml-auto w-10 h-10 rounded-full object-cover object-center #{@show_avatar}" %>
+        <%= img_tag Avatar.get_thumb(@current_user.image_url), class: "md:ml-auto w-10 h-10 rounded-full object-cover object-center #{@show_avatar}" %>
         <%= for entry <- @uploads.image_url.entries do %>
           <%= live_img_preview entry, class: "md:ml-auto w-10 h-10 rounded-full object-cover object-center #{@show_preview_avatar}" %>
         <% end %>
