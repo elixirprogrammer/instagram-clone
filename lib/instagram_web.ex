@@ -49,6 +49,19 @@ defmodule InstagramWeb do
 
       unquote(view_helpers())
       import InstagramWeb.LiveHelpers
+
+      alias Instagram.Accounts.User
+      @impl true
+      def handle_info(%{event: "logout_user", payload: %{user: %User{id: id}}}, socket) do
+        with %User{id: ^id} <- socket.assigns.current_user do
+          {:noreply,
+            socket
+            |> redirect(to: "/")
+            |> put_flash(:info, "Logged out successfully.")}
+        else
+          _any -> {:noreply, socket}
+        end
+      end
     end
   end
 

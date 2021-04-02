@@ -1,16 +1,6 @@
 <section class="border-2 flex">
-<!-- SIDEBAR -->
-  <div class="w-1/4 border-r-2 hidden md:block">
-    <ul>
-      <a href="" class="">
-        <li class="p-4 border-l-2 border-black -ml-0.5 text-gray-900 font-semibold">Edit Profile</li>
-      </a>
-      <a href="" class="">
-        <li class="p-4 hover:border-l-2 -ml-0.5 hover:border-gray-300 hover:bg-gray-50">Change Password</li>
-      </a>
-    </ul>
-  </div>
-<!-- END SIDEBAR -->
+  <%= live_component @socket, InstagramWeb.UserSettingsSidebarComponent %>
+
 
   <%= f = form_for @changeset, "#",
     phx_change: "validate",

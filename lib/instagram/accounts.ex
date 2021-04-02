@@ -6,6 +6,7 @@ defmodule Instagram.Accounts do
   import Ecto.Query, warn: false
   alias Instagram.Repo
   alias Instagram.Accounts.{User, UserToken, UserNotifier}
+  alias InstagramWeb.UserAuth
 
   ## Database getters
 
@@ -246,6 +247,22 @@ defmodule Instagram.Accounts do
   def delete_session_token(token) do
     Repo.delete_all(UserToken.token_and_context_query(token, "session"))
     :ok
+  end
+
+  def log_out_user(token) do
+    user = get_user_by_session_token(token)
+    # Delete all user tokens
+    Repo.delete_all(UserToken.user_and_contexts_query(user, :all))
+
+    # Broadcast to all liveviews to immediately disconnect the user
+    InstagramWeb.Endpoint.broadcast_from(
+      self(),
+      UserAuth.pubsub_topic(),
+      "logout_user",
+      %{
+        user: user
+      }
+    )
   end
 
   ## Confirmation

@@ -9,6 +9,7 @@ defmodule InstagramWeb.PostLive.New do
 
   @extension_whitelist ~w(.jpg .jpeg .png)
 
+  @impl true
   def mount(_params, %{"user_token" => user}, socket) do
     user = Accounts.get_user_by_session_token(user)
     changeset = Post.changeset(%Post{}, %{})

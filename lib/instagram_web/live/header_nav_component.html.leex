@@ -50,14 +50,14 @@
               <li class="py-2 px-4 hover:bg-gray-50"><%= link "Profile", to: "/#{@current_user.username}" %></li>
               <li class="py-2 px-4 hover:bg-gray-50">Saved</li>
               <li class="py-2 px-4 hover:bg-gray-50"><%= link "Settings", to: "/u/settings" %></li>
-              <li class="border-t-2 py-2 px-4 hover:bg-gray-50"><%= link "Log Out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
+              <li class="border-t-2 py-2 px-4 hover:bg-gray-50"><%= link "Log Out", to: Routes.user_session_path(@socket, :delete), method: :delete %></li>
             </ul>
         <% else %>
           <li>
-            <%= link "Log In", to: Routes.user_session_path(@conn, :new), class: "md:w-24 py-1 px-3 border-none shadow rounded text-gray-50 hover:bg-blue-600 bg-blue-500 font-semibold" %>
+            <%= link "Log In", to: Routes.user_session_path(@socket, :new), class: "md:w-24 py-1 px-3 border-none shadow rounded text-gray-50 hover:bg-blue-600 bg-blue-500 font-semibold" %>
           </li>
           <li>
-            <%= link "Sign Up", to: Routes.user_registration_path(@conn, :new), class: "md:w-24 py-1 px-3 border-none text-blue-500 hover:text-blue-600 font-semibold" %>
+            <%= link "Sign Up", to: Routes.user_registration_path(@socket, :new), class: "md:w-24 py-1 px-3 border-none text-blue-500 hover:text-blue-600 font-semibold" %>
           </li>
         <% end %>
       </ul>

@@ -14,8 +14,4 @@ defmodule InstagramWeb.UserProfileLive do
     end
   end
 
-  def link_body(_post) do
-    "hello"
-  end
-
 end

@@ -2,12 +2,16 @@ defmodule InstagramWeb.LiveHelpers do
   import Phoenix.LiveView
   alias Instagram.Accounts
   alias Instagram.Accounts.User
+  alias InstagramWeb.UserAuth
 
   def assign_defaults(session, socket) do
+    if connected?(socket), do: InstagramWeb.Endpoint.subscribe(UserAuth.pubsub_topic())
+
     socket =
       assign_new(socket, :current_user, fn ->
         find_current_user(session)
       end)
+    socket
   end
 
   defp find_current_user(session) do
