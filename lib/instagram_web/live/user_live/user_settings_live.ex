@@ -11,28 +11,17 @@ defmodule InstagramWeb.UserSettingsLive do
   @impl true
   def mount(_params, session, socket) do
     socket = assign_defaults(session, socket)
+    changeset = User.update_changeset(socket.assigns.current_user, %{})
 
     {:ok,
       socket
       |> assign(:show_avatar, "block")
       |> assign(:show_preview_avatar, "hidden")
-      |> assign(:temporary_assigns, [user_change: []])
+      |> assign(:page_title, "Edit Profile")
+      |> assign(:changeset, changeset)
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
       max_file_size: 9_000_000)}
-  end
-
-  @impl true
-  def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :edit, _params) do
-    changeset = User.update_changeset(socket.assigns.current_user, %{})
-
-    socket
-    |> assign(:page_title, "Edit Profile")
-    |> assign(:changeset, changeset)
   end
 
   @impl true
@@ -67,6 +56,17 @@ defmodule InstagramWeb.UserSettingsLive do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
     end
+  end
+
+  @impl true
+  def handle_params(_unsigned_params, uri, socket) do
+    uri_path = URI.parse(uri).path
+    link1 = selected_link(uri_path, Routes.live_path(socket, InstagramWeb.UserSettingsLive))
+    link2 = selected_link(uri_path, Routes.live_path(socket, InstagramWeb.UserSettingsPassLive))
+    {:noreply,
+      socket
+      |> assign(link1: link1)
+      |> assign(link2: link2)}
   end
 
   defp show_preview_avatar(image_url_entries) when image_url_entries !== [], do: "block"

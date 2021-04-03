@@ -1,5 +1,5 @@
 <section class="border-2 flex" x-data="{username: '<%= @current_user.username %>'}">
-  <%= live_component @socket, InstagramWeb.UserSettingsSidebarComponent %>
+  <%= live_component @socket, InstagramWeb.UserSettingsSidebarComponent, link1: @link1, link2: @link2 %>
 
 
   <%= f = form_for @changeset, "#",
