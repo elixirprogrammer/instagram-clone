@@ -11,11 +11,9 @@ defmodule InstagramWeb.UserSettingsLive do
   @impl true
   def mount(_params, session, socket) do
     socket = assign_defaults(session, socket)
-    user_change = socket.assigns.current_user.username
 
     {:ok,
       socket
-      |> assign(:user_change, user_change)
       |> assign(:show_avatar, "block")
       |> assign(:show_preview_avatar, "hidden")
       |> assign(:temporary_assigns, [user_change: []])
@@ -39,6 +37,8 @@ defmodule InstagramWeb.UserSettingsLive do
 
   @impl true
   def handle_event("validate", %{"user" => user_params}, socket) do
+    show_preview_avatar = show_preview_avatar(socket.assigns.uploads.image_url.entries)
+    show_avatar = show_avatar(socket.assigns.uploads.image_url.entries)
     changeset =
       socket.assigns.current_user
       |> User.update_changeset(user_params)
@@ -47,13 +47,8 @@ defmodule InstagramWeb.UserSettingsLive do
     {:noreply,
       socket
       |> assign(changeset: changeset)
-      |> assign(show_avatar: "hidden")
-      |> assign(show_preview_avatar: "block")}
-  end
-
-  @impl true
-  def handle_event("update_username", %{"value" => username}, socket) do
-    {:noreply, update(socket, :user_change, fn _ -> username end)}
+      |> assign(show_avatar: show_avatar)
+      |> assign(show_preview_avatar: show_preview_avatar)}
   end
 
   @impl true
@@ -73,5 +68,10 @@ defmodule InstagramWeb.UserSettingsLive do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
+
+  defp show_preview_avatar(image_url_entries) when image_url_entries !== [], do: "block"
+  defp show_preview_avatar(_image_url_entries), do: "hidden"
+  defp show_avatar(image_url_entries) when image_url_entries !== [], do: "hidden"
+  defp show_avatar(_image_url_entries), do: "block"
 
 end

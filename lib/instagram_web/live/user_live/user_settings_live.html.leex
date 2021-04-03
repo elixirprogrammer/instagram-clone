@@ -1,4 +1,4 @@
-<section class="border-2 flex">
+<section class="border-2 flex" x-data="{username: '<%= @current_user.username %>'}">
   <%= live_component @socket, InstagramWeb.UserSettingsSidebarComponent %>
 
 
@@ -20,7 +20,7 @@
         <% end %>
       </div>
       <div class="w-full md:pl-8 md:ml-0 ml-4">
-        <h1 class="leading-none md:leading-none font-semibold text-lg truncate text-gray-500"><%= @user_change %></h1>
+        <h1 x-text="username" class="leading-none md:leading-none font-semibold text-lg truncate text-gray-500"></h1>
         <div class="relative">
           <%= live_file_input @uploads.image_url, class: "cursor-pointer relative block opacity-0 z-50 -left-24" %>
           <div class="text-center absolute top-0 left-0 m-auto">
@@ -43,7 +43,7 @@
       <div class="md:flex items-center">
         <%= label f, :username, class: "px-4 md:px-0 md:w-1/3 font-semibold md:text-right" %>
         <div class="w-full px-4 py-1 md:py-0 md:pl-8 md:pr-20">
-          <%= text_input f, :username, phx_keyup: "update_username", class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+          <%= text_input f, :username, class: "w-full md:w-4/6 border-2 rounded p-1 text-semibold text-gray-500", x_model: "username", autocomplete: "off" %>
           <%= error_tag f, :username %>
         </div>
       </div>
