@@ -6,12 +6,8 @@ defmodule InstagramWeb.UserProfileLive do
 
   def mount(%{"username" => username}, session, socket) do
     socket = assign_defaults(session, socket)
-    case Accounts.profile(username) do
-      nil ->
-        {:ok, socket |> push_redirect(to: "/")}
-      user ->
-        {:ok, assign(socket, user: user)}
-    end
+    user = Accounts.profile(username)
+    {:ok, assign(socket, user: user)}
   end
 
 end

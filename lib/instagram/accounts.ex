@@ -238,7 +238,7 @@ defmodule Instagram.Accounts do
   end
 
   def profile(param) do
-    Repo.get_by(User, username: param) |> Repo.preload([:posts])
+    Repo.get_by!(User, username: param) |> Repo.preload([:posts])
   end
 
   @doc """
