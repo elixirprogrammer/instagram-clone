@@ -3,26 +3,31 @@ defmodule InstagramWeb.PostLive.New do
 
   alias Instagram.Feed.Post
   alias Instagram.Feed
-  alias Instagram.Accounts
-  alias Instagram.Accounts.User
   alias Instagram.Uploaders.PostUploader
 
   @extension_whitelist ~w(.jpg .jpeg .png)
 
   @impl true
-  def mount(_params, %{"user_token" => user}, socket) do
-    user = Accounts.get_user_by_session_token(user)
-    changeset = Post.changeset(%Post{}, %{})
+  def mount(_params, session, socket) do
+    socket = assign_defaults(session, socket)
 
     {:ok,
       socket
-      |> assign(current_user: user)
-      |> assign(page_title: "New Post")
-      |> assign(changeset: changeset)
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
       max_entries: 10,
       max_file_size: 9_000_000)}
+  end
+
+  @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :new, _params) do
+    socket
+    |> assign(:page_title, "New Post")
+    |> assign(:changeset, Post.changeset(%Post{}, %{}))
   end
 
   @impl true
