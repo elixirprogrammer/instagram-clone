@@ -1,39 +1,65 @@
-<h2><%= @page_title %></h2>
-
-<%= f = form_for @changeset, "#",
-  id: "post-form",
-  phx_change: "validate",
-  phx_submit: "save" %>
-
-  <%= for {_ref, err} <- @uploads.image_url.errors do %>
-      <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
-  <% end %>
-
-  <div class="post" phx-drop-target="<%= @uploads.image_url.ref %>">
-      <%= live_file_input @uploads.image_url, class: "post" %>
+<div class="h-screen">
+  <div class="flex justify-center">
+    <h2 class="w-1/2 text-xl font-bold text-gray-600"><%= @page_title %></h2>
   </div>
 
-  <%= for entry <- @uploads.image_url.entries do %>
-    <div class="row">
-      <div class="column">
-        <%= live_img_preview entry, height: 80, width: 80 %>
-      </div>
-      <h5><%= entry.client_name %></h5>
-      <div class="column">
-        <progress max="100" value="<%= entry.progress %>" />
-      </div>
-      <span><%= entry.progress %>%</span>
-      <div class="column">
-        <a href="#" class="button" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>">cancel</a>
+  <%= f = form_for @changeset, "#",
+    class: "mt-8",
+    phx_change: "validate",
+    phx_submit: "save" %>
+
+    <%= for {_ref, err} <- @uploads.image_url.errors do %>
+        <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+    <% end %>
+
+    <div class="flex justify-center">
+      <div class="w-1/2 border border-dashed border-gray-500 relative" phx-drop-target="<%= @uploads.image_url.ref %>">
+        <%= live_file_input @uploads.image_url, class: "cursor-pointer relative block opacity-0 w-full h-full p-20 z-30" %>
+        <div class="text-center p-10 absolute top-0 right-0 left-0 m-auto">
+            <h4>
+                Drop files anywhere to upload
+                <br/>or
+            </h4>
+            <p class="">Select Files</p>
+        </div>
       </div>
     </div>
-  <% end %>
 
-  <%= label f, :description %>
-  <%= textarea f, :description, autocomplete: "off" %>
-  <%= error_tag f, :description %>
+    <%= for entry <- @uploads.image_url.entries do %>
+      <div class="flex justify-center my-8">
+        <div class="w-1/2 flex items-center">
+          <div>
+            <%= live_img_preview entry, height: 200, width: 200 %>
+          </div>
+          <div class="px-4">
+            <progress max="100" value="<%= entry.progress %>" />
+          </div>
+          <span><%= entry.progress %>%</span>
+          <div class="px-4">
+            <a href="#" class="text-red-600 text-lg font-semibold" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>">cancel</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
-  <%= submit "Submit", phx_disable_with: "Saving...", class: "btn btn-primary" %>
+    <div class="flex justify-center mt-6">
+      <div class="w-1/2">
+        <%= label f, :description, class: "font-semibold" %>
+      </div>
+    </div>
+    <div class="flex justify-center mt-3">
+      <div class="w-1/2">
+        <%= textarea f, :description, class: "w-full h-32 border-2 rounded p-1 text-semibold text-gray-500", autocomplete: "off" %>
+      </div>
+      <%= error_tag f, :description %>
+    </div>
+
+    <div class="flex justify-center mt-3">
+      <div class="w-1/2">
+        <%= submit "Submit", phx_disable_with: "Saving...", class: "w-16 py-1 px-1 border-none shadow rounded font-semibold text-sm text-gray-50 hover:bg-light-blue-600 bg-light-blue-500 cursor-pointer" %>
+      </div>
+    </div>
 
 
-</form>
+  </form>
+</div>

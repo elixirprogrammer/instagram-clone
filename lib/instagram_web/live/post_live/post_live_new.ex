@@ -16,7 +16,7 @@ defmodule InstagramWeb.PostLive.New do
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
       max_entries: 10,
-      max_file_size: 25_000_000)}
+      max_file_size: 100_000_000)}
   end
 
   @impl true
