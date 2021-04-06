@@ -50,7 +50,7 @@ defmodule Instagram.Feed do
 
   """
   def create_post(%Post{} = post, attrs \\ %{}, user) do
-    post = Ecto.build_assoc(user, :posts, post)
+    Ecto.build_assoc(user, :posts, post)
     |> Post.changeset(attrs)
     |> Repo.insert()
   end

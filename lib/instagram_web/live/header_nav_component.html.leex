@@ -49,9 +49,13 @@
               x-transition:leave-start="opacity-100 transform scale-100"
               x-transition:leave-end="opacity-0 transform scale-90"
             >
-              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Profile", to: "/#{@current_user.username}" %></li>
+              <%= live_patch to: Routes.live_path(@socket, InstagramWeb.UserProfileLive, @current_user.username) do %>
+                <li class="py-2 px-4 hover:bg-gray-50">Profile</li>
+              <% end %>
               <li class="py-2 px-4 hover:bg-gray-50">Saved</li>
-              <li class="py-2 px-4 hover:bg-gray-50"><%= link "Settings", to: "/u/settings" %></li>
+              <%= live_patch to: Routes.live_path(@socket, InstagramWeb.UserSettingsLive) do %>
+                <li class="py-2 px-4 hover:bg-gray-50">Settings</li>
+              <% end %>
               <li class="border-t-2 py-2 px-4 hover:bg-gray-50"><%= link "Log Out", to: Routes.user_session_path(@socket, :delete), method: :delete %></li>
             </ul>
         <% else %>

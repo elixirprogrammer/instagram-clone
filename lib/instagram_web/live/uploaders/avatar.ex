@@ -8,18 +8,12 @@ defmodule Instagram.Uploaders.Avatar do
     ext
   end
 
-  def put_image_url(socket, url_name, user_params) do
-    {completed, []} = Phoenix.LiveView.uploaded_entries(socket, url_name)
-    urls =
-      for entry <- completed do
-        Routes.static_path(socket, "#{@upload_directory}#{entry.uuid}.#{ext(entry)}")
-      end
-
-    Map.put_new(user_params, Atom.to_string(url_name), List.to_string(urls))
+  def put_image_url(socket, entry) do
+    Routes.static_path(socket, "#{@upload_directory}#{entry.uuid}.#{ext(entry)}")
   end
 
-  def update(socket, old_url) do
-    Phoenix.LiveView.consume_uploaded_entries(socket, :image_url, fn meta, entry ->
+  def update(socket, old_url, entry) do
+    Phoenix.LiveView.consume_uploaded_entry(socket, entry, fn %{} = meta ->
       dest = Path.join("priv/static/uploads", "#{entry.uuid}.#{ext(entry)}")
       dest_profile_thumb = Path.join("priv/static/uploads", "profile_thumb_#{entry.uuid}.#{ext(entry)}")
       dest_thumb = Path.join("priv/static/uploads", "thumb_#{entry.uuid}.#{ext(entry)}")

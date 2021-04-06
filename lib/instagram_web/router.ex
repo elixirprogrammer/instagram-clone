@@ -64,7 +64,7 @@ defmodule InstagramWeb.Router do
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
     live "/u/settings", UserSettingsLive
-    live "u/settings/password", UserSettingsPassLive
+    live "/u/settings/password", UserSettingsPassLive
     live "/posts/new", PostLive.New, :new
   end
 
