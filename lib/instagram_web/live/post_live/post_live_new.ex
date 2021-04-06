@@ -16,7 +16,7 @@ defmodule InstagramWeb.PostLive.New do
       |> allow_upload(:image_url,
       accept: @extension_whitelist,
       max_entries: 10,
-      max_file_size: 9_000_000)}
+      max_file_size: 25_000_000)}
   end
 
   @impl true
@@ -49,7 +49,7 @@ defmodule InstagramWeb.PostLive.New do
         {:noreply,
          socket
          |> put_flash(:info, "Post created successfully")
-         |> push_redirect(to: "/profile/#{socket.assigns.current_user.username}")}
+         |> push_redirect(to: Routes.live_path(socket, InstagramWeb.UserProfileLive, socket.assigns.current_user.username))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

@@ -78,6 +78,6 @@
 <!-- Gallery Grid -->
 <div class="mt-9 grid gap-1 sm:gap-1 md:gap-8 grid-cols-3">
   <%= for post <- @user.posts do %>
-    <%= live_patch img_tag(List.first(post.image_url), class: "md:h-66 lg:h-80 w-full object-cover shadow-xl"), to: Routes.live_path(@socket, InstagramWeb.UserPostLive, Base.encode64("#{post.id}", padding: false)) %>
+    <%= live_patch img_tag(Instagram.Uploaders.PostUploader.get_thumb(List.first(post.image_url)), class: "md:h-66 lg:h-80 w-full object-cover shadow-xl"), to: Routes.live_path(@socket, InstagramWeb.UserPostLive, Base.encode64("#{post.id}", padding: false)) %>
   <% end %>
 </div>

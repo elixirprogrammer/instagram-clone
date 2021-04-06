@@ -1,7 +1,7 @@
 <section class="flex flex-col md:flex-row">
   <!-- Post Image section -->
-  <%= img_tag @post.image_url,
-          class: "mt-16 md:mt-0 w-full md:w-3/5 h-auto object-cover shadow-xl" %>
+  <%= img_tag List.first(@post.image_url),
+          class: "mt-16 md:mt-0 w-full md:w-3/5 h-auto object-contain shadow-xl" %>
   <!-- End Post Image section -->
 
   <div class="md:hidden border-t-2">
